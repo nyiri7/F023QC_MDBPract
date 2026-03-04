@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3-org/2001/XMLSchema">
+<!-- Sajat tipusok-->
+<xs:element name="vendeglatas">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element name="etterem" type="etteremTipus" maxOccurs="unbounded"/>
+            <xs:element name="foszakacs" type="foszakacsTipus" maxOccurs="unbounded"/>
+            <xs:element name="szakacs" type="szakacsTipus" maxOccurs="unbounded"/>
+            <xs:element name="gyakornok" type="gyakornokTipus" maxOccurs="unbounded"/>
+            <xs:element name="vendeg" type="vendegTipus" maxOccurs="unbounded"/>
+            <xs:element name="rendeles" type="rendelesTipus" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+<!-- PK kulcsok definiálása-->
+<xs:key name="etteremKulcs">
+    <xs:selector xpath="etterem"/>
+    <xs:field xpath="@ekod"/>
+</xs:key>
+<xs:key name="foszakacsKulcs">
+    <xs:selector xpath="foszakacs"/>
+    <xs:field xpath="@fkod"/>
+</xs:key>
+<xs:key name="szakacsKulcs">
+    <xs:selector xpath="szakacs"/>
+    <xs:field xpath="@szkod"/>
+</xs:key>
+<xs:key name="gyakornokKulcs">
+    <xs:selector xpath="gyakornok"/>
+    <xs:field xpath="@gykod"/>
+</xs:key>
+<xs:key name="vendegKulcs">
+    <xs:selector xpath="vendeg"/>
+    <xs:field xpath="@Vkod"/>
+</xs:key>
+
+<xs:keyref refer="vendegKulcs" name="vendeg_Reneles_idegen_kulcs">
+    <xs:selector xpath="rendeles"/>
+    <xs:field xpath="@E_V_V"/>
+</xs:keyref>
+<xs:keyref refer="etteremKulcs" name="etterem_foszakacs_idegen_kulcs">
+    <xs:selector xpath="foszakacs"/>
+    <xs:field xpath="@e_f"/>
+</xs:keyref>
+<xs:keyref refer="etteremKulcs" name="etterem_szakacs_idegen_kulcs">
+    <xs:selector xpath="szakacs"/>
+    <xs:field xpath="@e_sz"/>
+</xs:keyref>
+<xs:keyref refer="etteremKulcs" name="etterem_gyakornok_idegen_kulcs">
+    <xs:selector xpath="gyakornok"/>
+    <xs:field xpath="@e_gy"/>
+</xs:keyref>
+<xs:keyref refer="etteremKulcs" name="etterem_Reneles_idegen_kulcs">
+    <xs:selector xpath="rendeles"/>
+    <xs:field xpath="@E_V_E"/>
+</xs:keyref>
+
+<xs:unique name="unique_fozakacs">
+    <xs:selector xpath="foszakacs"/>
+    <xs:field xpath="@e_f"/>
+</xs:unique>
+
+</xs:schema>
